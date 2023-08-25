@@ -1,0 +1,255 @@
+/*Nombre: Lisbeth Valdez Mora      Matricula: 22-EIIT-1-003          Sección:0541*/
+
+USE [master]
+GO
+/****** Object:  Database [Zapateria]    Script Date: 25/8/2023 1:26:23 a. m. ******/
+CREATE DATABASE [Zapateria]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Zapateria', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQL2023\MSSQL\DATA\Zapateria.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'Zapateria_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQL2023\MSSQL\DATA\Zapateria_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [Zapateria] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Zapateria].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Zapateria] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Zapateria] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Zapateria] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Zapateria] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Zapateria] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Zapateria] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Zapateria] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Zapateria] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Zapateria] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Zapateria] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Zapateria] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Zapateria] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Zapateria] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Zapateria] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Zapateria] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Zapateria] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Zapateria] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Zapateria] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Zapateria] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Zapateria] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Zapateria] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Zapateria] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Zapateria] SET RECOVERY FULL 
+GO
+ALTER DATABASE [Zapateria] SET  MULTI_USER 
+GO
+ALTER DATABASE [Zapateria] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Zapateria] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Zapateria] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Zapateria] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [Zapateria] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [Zapateria] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'Zapateria', N'ON'
+GO
+ALTER DATABASE [Zapateria] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [Zapateria] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [Zapateria]
+GO
+/****** Object:  Table [dbo].[clientes]    Script Date: 25/8/2023 1:26:23 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[clientes](
+	[id_cli] [int] NOT NULL,
+	[nombre_cli] [varchar](50) NULL,
+	[direccion_cli] [varchar](50) NULL,
+	[telefono_cli] [varchar](10) NULL,
+	[correo_cli] [varchar](20) NULL,
+	[id_ventas3] [int] NULL,
+ CONSTRAINT [pk_ccli] PRIMARY KEY CLUSTERED 
+(
+	[id_cli] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[inventario]    Script Date: 25/8/2023 1:26:23 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[inventario](
+	[id_invent] [int] NOT NULL,
+	[talla_prod] [int] NULL,
+	[color_prod] [varchar](10) NULL,
+	[cantidad_disp] [int] NULL,
+	[id_prod3] [int] NULL,
+ CONSTRAINT [pk_cinvent] PRIMARY KEY CLUSTERED 
+(
+	[id_invent] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[productos]    Script Date: 25/8/2023 1:26:23 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[productos](
+	[id_prod] [int] NOT NULL,
+	[nombre_prod] [varchar](50) NULL,
+	[numero_prod] [int] NULL,
+	[descripcion_prod] [varchar](60) NULL,
+	[precio_prod] [varchar](10) NULL,
+	[id_ventas2] [int] NULL,
+ CONSTRAINT [pk_cprod] PRIMARY KEY CLUSTERED 
+(
+	[id_prod] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[proveedores]    Script Date: 25/8/2023 1:26:23 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[proveedores](
+	[id_prov] [int] NOT NULL,
+	[nombre_prov] [varchar](50) NULL,
+	[direccion_prov] [varchar](60) NULL,
+	[telefono_prov] [varchar](10) NULL,
+	[correo_prov] [varchar](20) NULL,
+	[id_prod2] [int] NULL,
+ CONSTRAINT [pk_cprov] PRIMARY KEY CLUSTERED 
+(
+	[id_prov] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ventas]    Script Date: 25/8/2023 1:26:24 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ventas](
+	[id_ventas] [int] NOT NULL,
+	[fecha_ventas] [date] NULL,
+	[num_factura] [int] NULL,
+	[cantid_ventas] [int] NULL,
+	[precio_total] [varchar](10) NULL,
+ CONSTRAINT [pk_cventas] PRIMARY KEY CLUSTERED 
+(
+	[id_ventas] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (15, N'Andrés Mendoza', N'Los 3 Ojos', N'8097758367', N'andres@gmail.com', 3)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (16, N'Mariana Vargas', N'Los Mameyes', N'8298472659', N'mariana@hotmail.com', 7)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (17, N'Diego Silva', N'La Isabelita', N'8292716648', N'diego@gmail.com', 1)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (18, N'Gabriela Ortega', N'San Cristobal', N'8093637383', N'gabriela@outlook.com', 5)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (19, N'Juan Castro', N'La Caleta', N'8295877478', N'juanc@gmail.com', 2)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (20, N'Natalia Rojas', N'Las Americas', N'8096327374', N'nataliar@outlook.com', 6)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (21, N'Javier Medina', N'Distrito Nacional', N'8298475736', N'javierm@gmail.com', 4)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (22, N'Maria Acosta', N'Palo Alto', N'849876456', N'maria@hotmail.com', 5)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (23, N'Pedro Ureña', N'Pedernales', N'829087234', N'pedro@hotmail.com', 2)
+INSERT [dbo].[clientes] ([id_cli], [nombre_cli], [direccion_cli], [telefono_cli], [correo_cli], [id_ventas3]) VALUES (24, N'Isabel Puello', N'Distrito Nacional', N'809432145', N'isabel@gmail.com', 1)
+GO
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (29, 40, N'Blancos', 18, 8)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (30, 39, N'Negros', 10, 9)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (31, 37, N'Rojos', 10, 10)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (32, 40, N'Cremas', 20, 11)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (33, 41, N'Blancos', 5, 12)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (34, 39, N'Negros', 30, 13)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (35, 38, N'Verdes', 10, 14)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (36, 40, N'Negros', 3, 8)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (37, 37, N'Blancos', 12, 9)
+INSERT [dbo].[inventario] ([id_invent], [talla_prod], [color_prod], [cantidad_disp], [id_prod3]) VALUES (38, 39, N'Azul', 15, 10)
+GO
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (8, N'Converse', 1, N'Muy comodos', N'RD$800', 1)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (9, N'Vans', 2, N'No molestan y puedes darle uso diario', N'RD$1,000', 2)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (10, N'Heels Long Strangs', 3, N'Extravagantes y hermosos tacos que se amarran', N'RD$900', 3)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (11, N'Chunky Sandals', 4, N'Puedes estar o salir de casa con ellas', N'RD$950', 4)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (12, N'Nike AF1', 5, N'Super hermoso y va con todo', N'RD$1,690', 5)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (13, N'Converse Platform', 6, N'Converse con plataforma, muy hermoso', N'RD$1,500', 6)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (14, N'Adidas x Bad Bunny', 7, N'Raras... pero bonitas', N'RD$1,600', 7)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (15, N'New Balance', 8, N'Comodidad Funcional', N'RD$2,000', 8)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (16, N'Timberland', 9, N'Resistente Duradero', N'RD$3,000', 9)
+INSERT [dbo].[productos] ([id_prod], [nombre_prod], [numero_prod], [descripcion_prod], [precio_prod], [id_ventas2]) VALUES (17, N'Skechers', 10, N'Versatil comodos', N'RD$1,500', 10)
+GO
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (22, N'Igor Ubiera', N'Villa Duarte', N'8092573727', N'uigor@yahoo.com', 14)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (23, N'Jorge Rosendo', N'Distrito Nacional', N'8493736384', N'jorgej@gmail.com', 9)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (24, N'Laura Cantalicio', N'Los Mina', N'8298376725', N'laura@hotmail.com', 10)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (25, N'Mark Abreu', N'La Caleta', N'8495929536', N'markab@hotmail.com', 12)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (26, N'Osiris Matos', N'Los 3 Ojos', N'8093726836', N'osiriso@yahoo.com', 8)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (27, N'Yahinniel Torres', N'Alma Rosa', N'8498725637', N'yahiale@gmail.com', 11)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (28, N'Crismel Carrasco', N'Santiago', N'8093753853', N'crism@hotmail.com', 13)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (29, N'Lucía Paredes', N'Moca', N'8093456298', N'lucia@gmail.com', 17)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (30, N'Emilio Rios', N'Dajabón', N'8290875643', N'emilior@hotmail.com', 16)
+INSERT [dbo].[proveedores] ([id_prov], [nombre_prov], [direccion_prov], [telefono_prov], [correo_prov], [id_prod2]) VALUES (31, N'Renata Navarro', N'Distrito Nacional', N'8490812764', N'renatan@gmail.com', 15)
+GO
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (1, CAST(N'2021-09-06' AS Date), 1, 6, N'RD$4,800')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (2, CAST(N'2021-09-17' AS Date), 4, 4, N'RD$4,000')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (3, CAST(N'2021-04-25' AS Date), 7, 8, N'RD$7,200')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (4, CAST(N'2022-08-25' AS Date), 16, 1, N'RD$950')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (5, CAST(N'2022-10-10' AS Date), 274, 3, N'RD$5,070')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (6, CAST(N'2023-05-26' AS Date), 1243, 2, N'RD$3,000')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (7, CAST(N'2023-03-28' AS Date), 1332, 3, N'RD$4,800')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (8, CAST(N'2023-06-19' AS Date), 9867, 1, N'RD$2,000')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (9, CAST(N'2023-04-03' AS Date), 1276, 2, N'RD$6,000')
+INSERT [dbo].[ventas] ([id_ventas], [fecha_ventas], [num_factura], [cantid_ventas], [precio_total]) VALUES (10, CAST(N'2023-07-28' AS Date), 2312, 1, N'RD$900')
+GO
+ALTER TABLE [dbo].[clientes]  WITH CHECK ADD  CONSTRAINT [fk_fventas3] FOREIGN KEY([id_ventas3])
+REFERENCES [dbo].[ventas] ([id_ventas])
+GO
+ALTER TABLE [dbo].[clientes] CHECK CONSTRAINT [fk_fventas3]
+GO
+ALTER TABLE [dbo].[inventario]  WITH CHECK ADD  CONSTRAINT [FK_inventario_productos] FOREIGN KEY([id_prod3])
+REFERENCES [dbo].[productos] ([id_prod])
+GO
+ALTER TABLE [dbo].[inventario] CHECK CONSTRAINT [FK_inventario_productos]
+GO
+ALTER TABLE [dbo].[productos]  WITH CHECK ADD  CONSTRAINT [fk_fventas2] FOREIGN KEY([id_ventas2])
+REFERENCES [dbo].[ventas] ([id_ventas])
+GO
+ALTER TABLE [dbo].[productos] CHECK CONSTRAINT [fk_fventas2]
+GO
+ALTER TABLE [dbo].[proveedores]  WITH CHECK ADD  CONSTRAINT [fk_fprod2] FOREIGN KEY([id_prod2])
+REFERENCES [dbo].[productos] ([id_prod])
+GO
+ALTER TABLE [dbo].[proveedores] CHECK CONSTRAINT [fk_fprod2]
+GO
+USE [master]
+GO
+ALTER DATABASE [Zapateria] SET  READ_WRITE 
+GO
